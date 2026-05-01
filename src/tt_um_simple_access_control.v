@@ -14,7 +14,7 @@ module tt_um_simple_access_control (
 
   assign {col, row}  = ui_in[7:0];  // 4X4 keypad input
 
-  assign ui_out[2:0] = rgb_out;  // RGB LED output
+  assign uo_out[2:0] = rgb_out;  // RGB LED output
 
 
   simple_access_control access_control (
