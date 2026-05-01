@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "Simple Access Control"      # Project title
-  author:       "Bolu, Isreal, Ajose Victor, Adeleke"      # Your name
+  author:       "Seidu Boluwatife, Ajugu Isreal, Ajose Victor, Stephen Adeleke"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Grant access based on input code"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
