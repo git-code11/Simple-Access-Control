@@ -1,4 +1,6 @@
 
+`define default_netname none
+
 module tt_um_simple_access_control (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -9,9 +11,9 @@ module tt_um_simple_access_control (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-  assign uio_oe = 8'b1111_1111;
-  assign uio_out = 8'b0000_0000;
-  assign uo_out[7:3] = 5'b0_0000;
+  assign uio_oe = 0;
+  assign uio_out = 0;
+  assign uo_out[7:3] = 5'd0;
 
   wire [3:0] row, col;
   wire [2:0] rgb_out;
