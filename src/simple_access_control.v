@@ -23,7 +23,7 @@ module simple_access_control (
   end
 
   // Output and Next-State Logic
-  always @(posedge clk or negedge rst_n) begin
+  always @(current_state, negedge rst_n) begin
     if (!rst_n) begin
       rgb_out <= 3'b000;
       next_state <= ST_IDLE;
