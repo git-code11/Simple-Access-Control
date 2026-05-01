@@ -9,10 +9,11 @@ module tt_um_simple_access_control (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-  wire [3:0] input_code = ui_in[3:0];  // Input Code is the lower 4 bit of ui_in
-  wire       status;  // Access grant status
+  wire [7:0] input_code = ui_in[7:0];  // Input Code is the lower 4 bit of ui_in
+  wire [2:0] status;  // Access grant status //RGB
 
-  assign status = input_code == 4'd5 ? 1 : 0;
-  assign ui_out[0] = status;
+  assign ui_out[2:0] = status;
+
+  assign status = input_code == 7'd5 ? 3'b000 : 3'b100;
 
 endmodule
