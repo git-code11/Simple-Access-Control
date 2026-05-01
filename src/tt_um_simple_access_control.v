@@ -12,8 +12,6 @@ module tt_um_simple_access_control (
   wire [3:0] row, col;
   wire [2:0] rgb_out;
 
-  wire rst = !rst_n;  // Switch reset button
-
   assign {col, row}  = ui_in[7:0];  // 4X4 keypad input
 
   assign ui_out[2:0] = rgb_out;  // RGB LED output
@@ -21,7 +19,7 @@ module tt_um_simple_access_control (
 
   simple_access_control access_control (
       .clk(clk),
-      .rst(rst),
+      .rst(rst_n),
       .row(row),
       .col(col),
       .rgb_out(rgb_out)
