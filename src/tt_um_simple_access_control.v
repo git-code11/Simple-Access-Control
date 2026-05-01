@@ -9,11 +9,22 @@ module tt_um_simple_access_control (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-  wire [7:0] input_code = ui_in[7:0];  // Input Code is the lower 4 bit of ui_in
-  wire [2:0] status;  // Access grant status //RGB
+  wire [3:0] row, col;
+  wire [2:0] rgb_out;
 
-  assign ui_out[2:0] = status;
+  wire rst = !rst_n;  // Switch reset button
 
-  assign status = input_code == 8'd5 ? 3'b000 : 3'b100;
+  assign {col, row}  = ui_in[7:0];  // 4X4 keypad input
+
+  assign ui_out[2:0] = rgb_out;  // RGB LED output
+
+
+  simple_access_control access_control (
+      .clk(clk),
+      .rst(rst),
+      .row(row),
+      .col(col),
+      .rgb_out(rgb_out)
+  );
 
 endmodule

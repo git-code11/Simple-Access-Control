@@ -19,24 +19,25 @@ project:
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "tt_um_simple_access_control.v"
+    - "simple_access_control.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "P0"
-  ui[1]: "P1"
-  ui[2]: "P2"
-  ui[3]: "P3"
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "C0"
+  ui[1]: "C1"
+  ui[2]: "C2"
+  ui[3]: "C3"
+  ui[4]: "R0"
+  ui[5]: "R1"
+  ui[6]: "R2"
+  ui[7]: "R3"
 
   # Outputs
-  uo[0]: "L0"
-  uo[1]: "L1"
-  uo[2]: "L2"
+  uo[0]: "B"
+  uo[1]: "G"
+  uo[2]: "R"
   uo[3]: ""
   uo[4]: ""
   uo[5]: ""
