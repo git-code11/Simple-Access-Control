@@ -9,6 +9,10 @@ module tt_um_simple_access_control (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
+  assign uio_oe = 8'b1111_1111;
+  assign uio_out = 8'b0000_0000;
+  assign uo_out[7:3] = 5'b0_0000;
+
   wire [3:0] row, col;
   wire [2:0] rgb_out;
 

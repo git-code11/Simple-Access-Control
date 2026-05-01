@@ -9,6 +9,7 @@ module simple_access_control (
   localparam ST_IDLE = 2'b00, ST_CHECK = 2'b01, ST_SUCCESS = 2'b10, ST_FAIL = 2'b11;
 
   reg [1:0] current_state, next_state;
+  wire  i_keypad[7:0] = {row, col};
 
   // Sub-modules
   // KEYPAD_SCANNER
