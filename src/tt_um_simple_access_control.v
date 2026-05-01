@@ -15,6 +15,9 @@ module tt_um_simple_access_control (
   assign uio_out = 0;
   assign uo_out[7:3] = 5'd0;
 
+  wire _unused = &{uio_in, ena, 1'b1};
+
+
   wire [3:0] row, col;
   wire [2:0] rgb_out;
 

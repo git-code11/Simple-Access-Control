@@ -2,7 +2,7 @@ module simple_access_control (
     input clk,
     input rst_n,
     input [3:0] row,
-    output [3:0] col,
+    input [3:0] col,
     output reg [2:0] rgb_out
 );
   // FSM State Definitions
