@@ -1,6 +1,6 @@
 module simple_access_control (
     input clk,
-    input reset_n,
+    input rst_n,
     input [3:0] row,
     output [3:0] col,
     output reg [2:0] rgb_out
@@ -16,14 +16,14 @@ module simple_access_control (
   // DEBOUNCER
 
   // FSM State Transition
-  always @(posedge clk or negedge reset_n) begin
-    if (!reset_n) current_state <= ST_IDLE;
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) current_state <= ST_IDLE;
     else current_state <= next_state;
   end
 
   // Output and Next-State Logic
-  always @(posedge clk or negedge reset_n) begin
-    if (!reset_n) begin
+  always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
       rgb_out <= 3'b000;
       next_state <= ST_IDLE;
     end else begin

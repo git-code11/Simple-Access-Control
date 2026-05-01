@@ -19,7 +19,7 @@ module tt_um_simple_access_control (
 
   simple_access_control access_control (
       .clk(clk),
-      .rst(rst_n),
+      .rst_n(rst_n),
       .row(row),
       .col(col),
       .rgb_out(rgb_out)
