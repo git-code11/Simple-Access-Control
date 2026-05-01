@@ -14,6 +14,6 @@ module tt_um_simple_access_control (
 
   assign ui_out[2:0] = status;
 
-  assign status = input_code == 7'd5 ? 3'b000 : 3'b100;
+  assign status = input_code == 8'd5 ? 3'b000 : 3'b100;
 
 endmodule
