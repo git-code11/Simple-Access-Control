@@ -24,31 +24,32 @@ module simple_access_control (
 
   // Output and Next-State Logic
   always @(*) begin
+    next_state = current_state;  // Default to hold state
     if (!rst_n) begin
-      rgb_out <= 3'b000;
-      next_state <= ST_IDLE;
+      rgb_out = 3'b000;
+      next_state = ST_IDLE;
     end else begin
       case (current_state)
         ST_IDLE: begin
-          rgb_out <= 3'b100;
+          rgb_out = 3'b100;
         end
 
         ST_CHECK: begin
-          rgb_out <= 3'b100;
-          next_state <= ST_CHECK;
+          rgb_out = 3'b100;
+          next_state = ST_CHECK;
         end
 
         ST_SUCCESS: begin
-          rgb_out <= 3'b010;
-          next_state <= ST_SUCCESS;  // Stay until reset
+          rgb_out = 3'b010;
+          next_state = ST_SUCCESS;  // Stay until reset
         end
 
         ST_FAIL: begin
-          rgb_out <= 3'b100;
-          next_state <= ST_FAIL;  // Stay until reset
+          rgb_out = 3'b100;
+          next_state = ST_FAIL;  // Stay until reset
         end
 
-        default: next_state <= ST_IDLE;  // Failsafe reset
+        default: next_state = ST_IDLE;  // Failsafe reset
       endcase
     end
   end
