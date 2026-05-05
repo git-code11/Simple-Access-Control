@@ -50,7 +50,7 @@ module simple_access_control (
 
         default: next_state <= ST_IDLE;  // Failsafe reset
       endcase
-    end!
+    end
   end
 endmodule
 
