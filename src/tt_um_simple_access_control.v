@@ -13,25 +13,24 @@ module tt_um_simple_access_control (
 );
   assign uio_oe = 0;
   assign uio_out = 0;
-  assign uo_out[7:3] = 5'd0;
+  assign uo_out[7:4] = 4'd0;
 
-  wire _unused = &{uio_in, ena, 1'b1};
+  wire _unused = &{uio_in, ui_in[7:5], ena, 1'b1};
 
 
-  wire [3:0] row, col;
+  wire [4:0] keys = ui_in[4:0];  // 5 keys input from the keypad
   wire [2:0] rgb_out;
+  wire is_unlocked;
 
-  assign {col, row}  = ui_in[7:0];  // 4X4 keypad input
 
   assign uo_out[2:0] = rgb_out;  // RGB LED output
-
+  assign uo_out[3] = is_unlocked;  // Unlock indicator (e.g., a separate LED)
 
   simple_access_control access_control (
       .clk(clk),
       .rst_n(rst_n),
-      .row(row),
-      .col(col),
-      .rgb_out(rgb_out)
+      .keys(keys),
+      .rgb_out(rgb_out),
+      .is_unlocked(is_unlocked)
   );
-
 endmodule

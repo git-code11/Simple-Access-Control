@@ -23,7 +23,7 @@ module keypad5 #(
 
   debouncer #(
       .BIT_WIDTH(`MAX_DIGIT + 1),
-      .DEBOUNCE_TIME_MS(`DEBOUNCE_TIME_MS),
+      .DEBOUNCE_TIME_MS(DEBOUNCE_TIME_MS),
       .CLK_FREQ(CLK_FREQ)
   ) debouncer (
       .clk(clk),
