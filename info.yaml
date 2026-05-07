@@ -20,25 +20,28 @@ project:
   source_files:
     - "tt_um_simple_access_control.v"
     - "simple_access_control.v"
+    - "keypad5.v"
+    - "debouncer.v"
+    - "clock_divider.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "R0"
-  ui[1]: "R1"
-  ui[2]: "R2"
-  ui[3]: "R3"
-  ui[4]: "C0"
-  ui[5]: "C1"
-  ui[6]: "C2"
-  ui[7]: "C3"
+  ui[0]: "0"
+  ui[1]: "1"
+  ui[2]: "2"
+  ui[3]: "3"
+  ui[4]: "4"
+  ui[5]: ""
+  ui[6]: ""
+  ui[7]: ""
 
   # Outputs
   uo[0]: "B"
   uo[1]: "G"
   uo[2]: "R"
-  uo[3]: ""
+  uo[3]: "UNLOCK"
   uo[4]: ""
   uo[5]: ""
   uo[6]: ""
