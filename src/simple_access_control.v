@@ -36,7 +36,10 @@ module simple_access_control (
   wire is_pressed;
   wire [3:0] value;
 
-  keypad5 keypad (
+  keypad5 #(
+    .CLK_FREQ(50_000_000),
+    .DEBOUNCE_TIME_MS(20)
+    ) keypad (
             .clk(clk),
             .rst_n(rst_n),
             .keys(keys),
