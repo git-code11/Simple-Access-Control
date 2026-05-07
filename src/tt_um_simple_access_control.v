@@ -1,5 +1,3 @@
-`default_netname none
-
 // =============================================================
 // Tiny Tapeout Top-Level Module
 // Simple Access Control System with Keypad Interface
