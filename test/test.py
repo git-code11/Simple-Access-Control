@@ -25,7 +25,7 @@ async def test_reset(dut):
     await ClockCycles(dut.clk, 10)
     
     # Check outputs are in reset state
-    assert dut.uo_out.value & 0x0F == 0, "Outputs should be 0 after reset"
+    assert int(dut.uo_out.value) & 0x0F == 0, "Outputs should be 0 after reset"
     cocotb.log.info("✓ Reset test passed")
 
 @cocotb.test()
@@ -43,7 +43,8 @@ async def test_pin_configuration(dut):
     await ClockCycles(dut.clk, 10)
     
     # Check uio_oe is configured correctly (lower 4 bits output)
-    assert dut.uio_oe.value == 0x0F, f"uio_oe should be 0x0F, got {dut.uio_oe.value:02x}"
+    uio_oe_val = int(dut.uio_oe.value)
+    assert uio_oe_val == 0x0F, f"uio_oe should be 0x0F, got {uio_oe_val:02x}"
     cocotb.log.info("✓ Pin configuration test passed")
 
 @cocotb.test()
