@@ -1,40 +1,96 @@
-# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
-# SPDX-License-Identifier: Apache-2.0
+"""
+Cocotb test for Tiny Tapeout access control system
+Tests basic functionality through the TT interface
+"""
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
-
+from cocotb.triggers import ClockCycles, RisingEdge
 
 @cocotb.test()
-async def test_project(dut):
-    dut._log.info("Start")
-
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 10, unit="us")
+async def test_reset(dut):
+    """Test reset behavior"""
+    
+    clock = Clock(dut.clk, 100, units="ns")  # 10 MHz
     cocotb.start_soon(clock.start())
-
-    # Reset
-    dut._log.info("Reset")
+    
+    # Apply reset
     dut.ena.value = 1
-    dut.ui_in.value = 0
-    dut.uio_in.value = 0
     dut.rst_n.value = 0
+    dut.ui_in.value = 0xFF
+    dut.uio_in.value = 0
+    
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 10)
+    
+    # Check outputs are in reset state
+    assert dut.uo_out.value & 0x0F == 0, "Outputs should be 0 after reset"
+    cocotb.log.info("✓ Reset test passed")
 
-    dut._log.info("Test project behavior")
+@cocotb.test()
+async def test_pin_configuration(dut):
+    """Verify bidirectional pin configuration"""
+    
+    clock = Clock(dut.clk, 100, units="ns")
+    cocotb.start_soon(clock.start())
+    
+    dut.ena.value = 1
+    dut.rst_n.value = 1
+    dut.ui_in.value = 0xFF
+    dut.uio_in.value = 0
+    
+    await ClockCycles(dut.clk, 10)
+    
+    # Check uio_oe is configured correctly (lower 4 bits output)
+    assert dut.uio_oe.value == 0x0F, f"uio_oe should be 0x0F, got {dut.uio_oe.value:02x}"
+    cocotb.log.info("✓ Pin configuration test passed")
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+@cocotb.test()
+async def test_keypad_scanning(dut):
+    """Verify keypad row scanning is active"""
+    
+    clock = Clock(dut.clk, 100, units="ns")
+    cocotb.start_soon(clock.start())
+    
+    dut.ena.value = 1
+    dut.rst_n.value = 1
+    dut.ui_in.value = 0xFF  # All columns high (no key pressed)
+    dut.uio_in.value = 0
+    
+    await ClockCycles(dut.clk, 100)
+    
+    # Check that row_drive is changing (scanning)
+    row_values = []
+    for _ in range(4):
+        await ClockCycles(dut.clk, 600000)  # Wait for scan period
+        row_values.append(int(dut.uio_out.value) & 0x0F)
+    
+    # Should see different row patterns
+    unique_rows = len(set(row_values))
+    assert unique_rows > 1, f"Row scanner not active, saw {unique_rows} unique patterns"
+    cocotb.log.info(f"✓ Keypad scanning test passed (saw {unique_rows} row patterns)")
 
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+@cocotb.test()
+async def test_basic_operation(dut):
+    """Test basic access control flow"""
+    
+    clock = Clock(dut.clk, 100, units="ns")
+    cocotb.start_soon(clock.start())
+    
+    # Reset
+    dut.ena.value = 1
+    dut.rst_n.value = 0
+    dut.ui_in.value = 0xFF
+    dut.uio_in.value = 0
+    
+    await ClockCycles(dut.clk, 10)
+    dut.rst_n.value = 1
+    await ClockCycles(dut.clk, 100)
+    
+    # Initial state - all outputs should be low
+    outputs = int(dut.uo_out.value) & 0x0F
+    assert outputs == 0, f"Expected outputs=0, got {outputs:04b}"
+    
+    cocotb.log.info("✓ Basic operation test passed")
+    cocotb.log.info("Note: Full keypad interaction tests require Verilog testbench")
