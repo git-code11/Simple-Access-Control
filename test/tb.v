@@ -6,7 +6,7 @@
 // Validates pin mappings and end-to-end functionality
 // =============================================================
 
-module tt_um_simple_access_control_tb;
+module tb;
 
     // =============================================================
     // Tiny Tapeout Standard Interface Signals
