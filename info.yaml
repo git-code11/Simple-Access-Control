@@ -1,58 +1,53 @@
 # Tiny Tapeout project information
 project:
-  title:        "Simple Access Control"      # Project title
-  author:       "Seidu Boluwatife, Ajugu Isreal, Ajose Victor, Stephen Adeleke"      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "Grant access based on input code"      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 1 if not applicable)
-
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
-
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  # top_module:  "tt_um_example"
-  top_module:  "tt_um_simple_access_control"
-
+  title:        "Simple Access Control System with Keypad"
+  author:       "Seidu Boluwatife, Ajugu Isreal, Ajose Victor, Stephen Adeleke"              # TODO: Fill in your name
+  discord:      ""       # TODO: Fill in your discord username (optional)
+  description:  "4×4 keypad access control with programmable password, fail counter, and timeout alarms"
+  language:     "Verilog"
+  clock_hz:     10000000  # 10 MHz clock (typical for TT06)
+  tiles: "1x1"
+  top_module:  "tt_um_simple_access_control"  # Must match your wrapper module name
+  
+  
   # List your project's source files here.
   # Source files must be in ./src and you must list each source file separately, one per line.
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "tt_um_simple_access_control.v"
-    - "simple_access_control.v"
+    - "tt_um_simple_access_control.v"  # Top-level wrapper (must be first)
+    - "simpleaccess.v"                 # All submodules (access_control, keypad_scanner, input_buffer, countdown_timer)
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
+# The pinout of your project
 pinout:
-  # Inputs
-  ui[0]: "R0"
-  ui[1]: "R1"
-  ui[2]: "R2"
-  ui[3]: "R3"
-  ui[4]: "C0"
-  ui[5]: "C1"
-  ui[6]: "C2"
-  ui[7]: "C3"
-
-  # Outputs
-  uo[0]: "B"
-  uo[1]: "G"
-  uo[2]: "R"
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
-
-  # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  # Inputs (ui[7:0])
+  ui[0]: "Keypad Column 0"
+  ui[1]: "Keypad Column 1"
+  ui[2]: "Keypad Column 2"
+  ui[3]: "Keypad Column 3"
+  ui[4]: "Door Sensor"
+  ui[5]: "Admin Reset Button"
+  ui[6]: "Program Mode Switch"
+  ui[7]: ""  # Unused
+  
+  # Outputs (uo[7:0])
+  uo[0]: "Unlock Signal"
+  uo[1]: "Red LED (Denied/Alarm)"
+  uo[2]: "Alarm Buzzer"
+  uo[3]: "Keypad Lockout"
+  uo[4]: ""  # Unused
+  uo[5]: ""  # Unused
+  uo[6]: ""  # Unused
+  uo[7]: ""  # Unused
+  
+  # Bidirectional pins (uio[7:0])
+  uio[0]: "Keypad Row 0 (output)"
+  uio[1]: "Keypad Row 1 (output)"
+  uio[2]: "Keypad Row 2 (output)"
+  uio[3]: "Keypad Row 3 (output)"
+  uio[4]: ""  # Unused (input)
+  uio[5]: ""  # Unused (input)
+  uio[6]: ""  # Unused (input)
+  uio[7]: ""  # Unused (input)
 
 # Do not change!
 yaml_version: 6
